@@ -7,16 +7,17 @@ import org.springframework.transaction.annotation.Transactional
 @Component
 class SearchBlogApplicationService(
     private val blogClient: BlogClient,
+    private val searchHistoryDomainService: SearchHistoryDomainService,
     private val searchHistoryDomainRepository: SearchBlogHistoryDomainRepository,
 ) {
     @Transactional
     fun searchBlog(searchBlogCondition: SearchBlogCondition): List<BlogDomain> {
-        val searchBlogHistoryDomain = getByKeyword(searchBlogCondition.query)
-        searchHistoryDomainRepository.saveOrUpdate(searchBlogHistoryDomain)
+        searchHistoryDomainService.saveOrUpdate(searchBlogCondition.query)
         return blogClient.search(searchBlogCondition.toOutBoundCondition()).toDomain()
     }
 
-    private fun getByKeyword(keyword: String): SearchBlogHistoryDomain {
-        return searchHistoryDomainRepository.findByKeyword(keyword) ?: SearchBlogHistoryDomain.getDefault(keyword)
+    @Transactional(readOnly = true)
+    fun getSearchedTopHistory(size: Int): List<SearchBlogHistoryDomain> {
+        return searchHistoryDomainRepository.findAllByOrderBySearchCount(size)
     }
 }

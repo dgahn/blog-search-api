@@ -4,6 +4,7 @@ plugins {
     kotlin("jvm") version "1.6.21"
     kotlin("plugin.spring") version "1.6.21"
     kotlin("plugin.allopen") version "1.6.21"
+    kotlin("plugin.noarg") version "1.6.21"
     kotlin("plugin.jpa") version "1.6.21"
     id("org.springframework.boot") version "2.7.3"
     id("io.spring.dependency-management") version "1.0.13.RELEASE"
@@ -22,11 +23,16 @@ allprojects {
     apply(plugin = "org.jmailen.kotlinter")
     apply(plugin = "org.springframework.boot")
     apply(plugin = "org.jetbrains.kotlin.plugin.allopen")
+    apply(plugin = "org.jetbrains.kotlin.plugin.noarg")
     apply(plugin = "io.spring.dependency-management")
 
     allOpen {
         annotation("org.springframework.boot.autoconfigure.SpringBootApplication")
         annotation("org.springframework.stereotype.Component")
+        annotation("javax.persistence.Entity")
+    }
+
+    noArg {
         annotation("javax.persistence.Entity")
     }
 
