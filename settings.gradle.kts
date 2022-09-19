@@ -1,4 +1,4 @@
-rootProject.name = "search-api"
+rootProject.name = "blog-search-api"
 
 include("application")
 include("backend-for-frontend")
