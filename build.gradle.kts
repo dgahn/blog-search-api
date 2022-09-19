@@ -4,6 +4,7 @@ plugins {
     kotlin("jvm") version "1.6.21"
     kotlin("plugin.spring") version "1.6.21"
     kotlin("plugin.allopen") version "1.6.21"
+    kotlin("plugin.jpa") version "1.6.21"
     id("org.springframework.boot") version "2.7.3"
     id("io.spring.dependency-management") version "1.0.13.RELEASE"
     id("io.gitlab.arturbosch.detekt") version "1.19.0"
@@ -26,6 +27,7 @@ allprojects {
     allOpen {
         annotation("org.springframework.boot.autoconfigure.SpringBootApplication")
         annotation("org.springframework.stereotype.Component")
+        annotation("javax.persistence.Entity")
     }
 
     repositories {
@@ -54,6 +56,7 @@ allprojects {
         implementation(kotlin("stdlib"))
         implementation("org.springframework.boot:spring-boot-starter-web")
         implementation("io.github.microutils:kotlin-logging-jvm:2.1.23")
+        runtimeOnly("org.jetbrains.kotlin:kotlin-reflect:1.6.21")
 
         testImplementation("org.springframework.boot:spring-boot-starter-test") {
             exclude(group = "junit", module = "junit")

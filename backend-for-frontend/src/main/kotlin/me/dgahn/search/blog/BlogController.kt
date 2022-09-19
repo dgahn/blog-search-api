@@ -9,7 +9,7 @@ import javax.validation.constraints.Min
 
 @RestController
 @Validated
-class SearchController(
+class BlogController(
     private val searchBlogApplicationService: SearchBlogApplicationService,
 ) {
 

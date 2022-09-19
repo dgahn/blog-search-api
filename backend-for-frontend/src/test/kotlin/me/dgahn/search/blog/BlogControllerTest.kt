@@ -11,7 +11,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension
 @ExtendWith(SpringExtension::class)
 @WebMvcTest
 @Import(value = [SearchBlogApplicationService::class])
-class SearchControllerTest : SpringMockMvcTestSupport() {
+class BlogControllerTest : SpringMockMvcTestSupport() {
 
     @Test
     fun `블로그_목록을_검색할_수_있다`() {
