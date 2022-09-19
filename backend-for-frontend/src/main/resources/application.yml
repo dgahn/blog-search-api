@@ -1,0 +1,4 @@
+kakao:
+  url: ${KAKAO_URL:https://dapi.kakao.com/v2/search/blog}
+  keyPrefix: ${KAKAO_KEY_PREFIX:KakaoAK}
+  apiKey: ${KAKAO_API_KEY:eb910bfed390a13b9d4b2b78b6f7c083}

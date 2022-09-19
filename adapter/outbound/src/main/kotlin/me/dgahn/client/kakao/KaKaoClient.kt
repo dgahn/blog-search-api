@@ -1,9 +1,9 @@
 package me.dgahn.client.kakao
 
+import me.dgahn.client.BaseBlogResponseListDto
 import me.dgahn.client.BlogClient
-import me.dgahn.client.BlogListResponse
-import me.dgahn.client.BlogListResponse.Companion.orEmpty
 import me.dgahn.client.OutBoundSearchBlogCondition
+import me.dgahn.client.kakao.KakaoBlogResponseListDto.Companion.orEmpty
 import org.springframework.http.HttpEntity
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpMethod
@@ -22,11 +22,12 @@ class KaKaoClient(
         set(HttpHeaders.AUTHORIZATION, "${kakaoProperties.keyPrefix} ${kakaoProperties.apiKey}")
     }
 
-    override fun search(outBoundSearchBlogCondition: OutBoundSearchBlogCondition): BlogListResponse {
+    // ToDo 예외 처리 추가 필요.
+    override fun search(outBoundSearchBlogCondition: OutBoundSearchBlogCondition): BaseBlogResponseListDto {
         val url = createURL(outBoundSearchBlogCondition)
         val entity: HttpEntity<String> = HttpEntity(headers)
 
-        return restTemplate.exchange(url, HttpMethod.GET, entity, BlogListResponse::class.java).body.orEmpty()
+        return restTemplate.exchange(url, HttpMethod.GET, entity, KakaoBlogResponseListDto::class.java).body.orEmpty()
     }
 
     private fun createURL(outBoundSearchBlogCondition: OutBoundSearchBlogCondition): String =
