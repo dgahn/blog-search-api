@@ -30,7 +30,7 @@ GET /v1/search/blog HTTP/1.1
 
 #### 인기 검색어 목록 API
 ```
-GET /v1/top-searched
+GET /v1/top-searched/blog HTTP/1.1
 ```
 
 |Name|Type| Description                          |Required|
