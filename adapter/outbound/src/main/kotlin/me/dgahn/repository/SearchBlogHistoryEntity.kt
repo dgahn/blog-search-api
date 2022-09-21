@@ -10,9 +10,17 @@ import javax.persistence.Entity
 import javax.persistence.EntityListeners
 import javax.persistence.GeneratedValue
 import javax.persistence.Id
+import javax.persistence.Index
+import javax.persistence.Table
 
 @Entity
 @EntityListeners(AuditingEntityListener::class)
+@Table(
+    indexes = [
+        Index(name = "search_blog_history__keyword__idx", columnList = "keyword"),
+        Index(name = "search_blog_history__search_count__idx", columnList = "searchCount"),
+    ]
+)
 class SearchBlogHistoryEntity(
     @Id
     @GeneratedValue
