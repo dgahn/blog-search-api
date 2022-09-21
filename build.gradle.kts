@@ -61,6 +61,9 @@ allprojects {
     dependencies {
         implementation(kotlin("stdlib"))
         implementation("org.springframework.boot:spring-boot-starter-web")
+        implementation("org.springframework.boot:spring-boot-starter-aop")
+        implementation("org.springframework.retry:spring-retry")
+
         implementation("io.github.microutils:kotlin-logging-jvm:2.1.23")
         runtimeOnly("org.jetbrains.kotlin:kotlin-reflect:1.6.21")
 

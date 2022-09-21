@@ -4,16 +4,16 @@ import me.dgahn.client.BaseBlogResponseListDto
 import me.dgahn.client.BlogClient
 import me.dgahn.client.OutBoundSearchBlogCondition
 import me.dgahn.client.kakao.KakaoBlogResponseListDto.Companion.orEmpty
-import org.springframework.context.annotation.Primary
 import org.springframework.http.HttpEntity
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpMethod
 import org.springframework.http.MediaType
+import org.springframework.retry.annotation.Backoff
+import org.springframework.retry.annotation.Retryable
 import org.springframework.stereotype.Component
 import org.springframework.web.client.RestTemplate
 import org.springframework.web.util.UriComponentsBuilder
 
-@Primary
 @Component
 class KaKaoClient(
     private val restTemplate: RestTemplate,
@@ -24,7 +24,7 @@ class KaKaoClient(
         set(HttpHeaders.AUTHORIZATION, "${kakaoProperties.keyPrefix} ${kakaoProperties.apiKey}")
     }
 
-    // ToDo 예외 처리 추가 필요.
+    @Retryable(maxAttempts = 2, backoff = Backoff(delay = 100))
     override fun search(outBoundSearchBlogCondition: OutBoundSearchBlogCondition): BaseBlogResponseListDto {
         val url = createURL(outBoundSearchBlogCondition)
         val entity: HttpEntity<String> = HttpEntity(headers)

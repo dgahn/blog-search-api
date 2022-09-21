@@ -13,7 +13,6 @@ class BlogController(
     private val searchBlogApplicationService: SearchBlogApplicationService,
 ) {
 
-    // ToDo sort 값을 ENUM 값으로 변경
     @GetMapping("/v1/search/blog")
     fun searchBlog(
         @RequestParam query: String,

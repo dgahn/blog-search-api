@@ -8,6 +8,8 @@ import org.springframework.http.HttpEntity
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpMethod
 import org.springframework.http.MediaType
+import org.springframework.retry.annotation.Backoff
+import org.springframework.retry.annotation.Retryable
 import org.springframework.stereotype.Component
 import org.springframework.web.client.RestTemplate
 import org.springframework.web.util.UriComponentsBuilder
@@ -23,7 +25,7 @@ class NaverClient(
         add(naverProperties.clientSecretKey, naverProperties.clientSecretValue)
     }
 
-    // ToDo 예외 처리 추가 필요.
+    @Retryable(maxAttempts = 2, backoff = Backoff(delay = 100))
     override fun search(outBoundSearchBlogCondition: OutBoundSearchBlogCondition): BaseBlogResponseListDto {
         val url = createURL(outBoundSearchBlogCondition)
         val entity: HttpEntity<String> = HttpEntity(headers)
