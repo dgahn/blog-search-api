@@ -18,21 +18,22 @@ class BlogController(
     fun searchBlog(
         @RequestParam query: String,
         @RequestParam(required = false, defaultValue = "accuracy") sort: String,
-        @RequestParam(required = false, defaultValue = "1") @Min(PAGING_MIN_VALUE) @Max(PAGING_MAX_VALUE) page: Int,
-        @RequestParam(required = false, defaultValue = "10") @Min(PAGING_MIN_VALUE) @Max(PAGING_MAX_VALUE) size: Int,
+        @RequestParam(required = false, defaultValue = "1") @Min(PAGING_MIN) @Max(SEARCH_BLOG_PAGING_MAX) page: Int,
+        @RequestParam(required = false, defaultValue = "10") @Min(PAGING_MIN) @Max(SEARCH_BLOG_PAGING_MAX) size: Int,
     ): List<BlogResponseDto> {
         return searchBlogApplicationService.searchBlog(SearchBlogCondition(query, sort, page, size)).toDto()
     }
 
     @GetMapping("/v1/top-searched/blog")
     fun getSearchedTop(
-        @RequestParam(required = false, defaultValue = "10") @Min(PAGING_MIN_VALUE) @Max(PAGING_MAX_VALUE) size: Int,
+        @RequestParam(required = false, defaultValue = "10") @Min(PAGING_MIN) @Max(SEARCHED_TOP_PAGING_MAX) size: Int,
     ): List<SearchBlogHistoryDto> {
         return searchBlogApplicationService.getSearchedTopHistory(size).toDto()
     }
 
     companion object {
-        private const val PAGING_MIN_VALUE = 1L
-        private const val PAGING_MAX_VALUE = 50L
+        private const val PAGING_MIN = 1L
+        private const val SEARCH_BLOG_PAGING_MAX = 50L
+        private const val SEARCHED_TOP_PAGING_MAX = 50L
     }
 }

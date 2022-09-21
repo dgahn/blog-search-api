@@ -18,7 +18,7 @@
 
 #### 블로그 검색 API
 ```
-GET /v1/search/blog HTTP/1.1
+GET /v1/search/blog
 ```
 
 |Name|Type| Description                                                          |Required|
@@ -33,6 +33,6 @@ GET /v1/search/blog HTTP/1.1
 GET /v1/top-searched/blog HTTP/1.1
 ```
 
-|Name|Type| Description                          |Required|
-|---|---|--------------------------------------|---|
-|size|Integer| 한 페이지에 보여질 문서 수, 1~10 사이의 값, 기본 값 10 |X|
+|Name|Type| Description                             |Required|
+|---|---|-----------------------------------------|---|
+|size|Integer| 한 페이지에 보여질 인기검색어 수, 1~10 사이의 값, 기본 값 10 |X|
