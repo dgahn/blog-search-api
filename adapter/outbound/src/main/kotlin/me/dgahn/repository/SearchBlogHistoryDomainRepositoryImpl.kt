@@ -2,7 +2,7 @@ package me.dgahn.repository
 
 import me.dgahn.repository.SearchBlogHistoryEntity.Companion.toEntity
 import me.dgahn.search.blog.SearchBlogHistoryDomain
-import me.dgahn.search.blog.SearchBlogHistoryDomainRepository
+import me.dgahn.search.blog.port.SearchBlogHistoryDomainRepository
 import org.springframework.data.domain.PageRequest
 import org.springframework.stereotype.Component
 

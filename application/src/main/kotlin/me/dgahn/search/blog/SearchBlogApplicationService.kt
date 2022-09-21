@@ -1,6 +1,7 @@
 package me.dgahn.search.blog
 
 import me.dgahn.client.BlogClient
+import me.dgahn.search.blog.port.SearchBlogHistoryDomainRepository
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 

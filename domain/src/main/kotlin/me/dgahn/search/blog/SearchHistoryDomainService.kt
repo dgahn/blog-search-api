@@ -1,5 +1,8 @@
 package me.dgahn.search.blog
 
+import me.dgahn.search.blog.port.SearchBlogHistoryDomainRepository
+import org.springframework.retry.annotation.Backoff
+import org.springframework.retry.annotation.Retryable
 import org.springframework.scheduling.annotation.Async
 import org.springframework.stereotype.Component
 
@@ -7,8 +10,8 @@ import org.springframework.stereotype.Component
 class SearchHistoryDomainService(
     private val searchHistoryDomainRepository: SearchBlogHistoryDomainRepository,
 ) {
-    // outbound 계층을 아예 분리하려다보니 더티 체크를 사용하지 못함..
     @Async
+    @Retryable(maxAttempts = 2, backoff = Backoff(delay = 100))
     fun saveOrUpdate(keyword: String) {
         val searchBlogHistoryDomain = getByKeyword(keyword)
         searchBlogHistoryDomain.count()
