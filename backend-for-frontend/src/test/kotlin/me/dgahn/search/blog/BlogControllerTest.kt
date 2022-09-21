@@ -5,6 +5,8 @@ import com.ninjasquad.springmockk.MockkBean
 import io.mockk.every
 import me.dgahn.fixture.BlogDomainFixture
 import me.dgahn.fixture.BlogResponseDtoFixture
+import me.dgahn.fixture.SearchBlogHistoryDomainFixture
+import me.dgahn.fixture.SearchBlogHistoryResponseDtoFixture
 import me.dgahn.util.SpringMockMvcTestSupport
 import me.dgahn.util.URI
 import org.junit.jupiter.api.Test
@@ -37,5 +39,18 @@ class BlogControllerTest(
         )
     }
 
-    private fun List<BlogResponseDto>.toJson(): String = objectMapper.writeValueAsString(this)
+    @Test
+    fun `인기_검색어를_조회할_수_있다`() {
+        every { searchBlogApplicationService.getSearchedTopHistory(any()) } returns SearchBlogHistoryDomainFixture
+            .getSearchBlogHistoryDomains()
+        val uri = URI("/v1/top-searched/blog")
+        uri.addQueryParam("size", "10")
+        val expected = SearchBlogHistoryResponseDtoFixture.getSearchBlogHistoryResponseDtos().toJson()
+        mockMvcGetTest(
+            uri = uri,
+            expectedResponseContent = expected
+        )
+    }
+
+    private inline fun <reified T> List<T>.toJson(): String = objectMapper.writeValueAsString(this)
 }

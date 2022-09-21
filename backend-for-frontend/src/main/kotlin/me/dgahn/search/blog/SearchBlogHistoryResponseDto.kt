@@ -2,7 +2,7 @@ package me.dgahn.search.blog
 
 import java.time.Instant
 
-data class SearchBlogHistoryDto(
+data class SearchBlogHistoryResponseDto(
     val id: Long,
     val keyword: String,
     val createdAt: Instant?,
@@ -10,8 +10,8 @@ data class SearchBlogHistoryDto(
     val searchCount: Int
 )
 
-fun SearchBlogHistoryDomain.toDto(): SearchBlogHistoryDto {
-    return SearchBlogHistoryDto(
+fun SearchBlogHistoryDomain.toDto(): SearchBlogHistoryResponseDto {
+    return SearchBlogHistoryResponseDto(
         id = id,
         keyword = keyword,
         createdAt = createdAt,
@@ -20,4 +20,4 @@ fun SearchBlogHistoryDomain.toDto(): SearchBlogHistoryDto {
     )
 }
 
-fun List<SearchBlogHistoryDomain>.toDto(): List<SearchBlogHistoryDto> = this.map { it.toDto() }
+fun List<SearchBlogHistoryDomain>.toDto(): List<SearchBlogHistoryResponseDto> = this.map { it.toDto() }
