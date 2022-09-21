@@ -69,7 +69,10 @@ allprojects {
 
         testImplementation("org.springframework.boot:spring-boot-starter-test") {
             exclude(group = "junit", module = "junit")
+            exclude(module = "mockito-core")
         }
+        testImplementation("io.mockk:mockk:1.12.0")
+        testImplementation("com.ninja-squad:springmockk:3.0.1")
         testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.0")
         testImplementation("org.junit.jupiter:junit-jupiter-params:5.9.0")
         testImplementation("org.junit.jupiter:junit-jupiter-engine:5.9.0")
