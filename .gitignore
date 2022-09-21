@@ -171,3 +171,5 @@ $RECYCLE.BIN/
 build
 !gradle/wrapper/gradle-wrapper.jar
 src/main/resources/templates/index.html
+
+!kakaobank.jar
