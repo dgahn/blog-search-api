@@ -65,14 +65,15 @@ allprojects {
         implementation("org.springframework.retry:spring-retry")
 
         implementation("io.github.microutils:kotlin-logging-jvm:2.1.23")
+        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
         runtimeOnly("org.jetbrains.kotlin:kotlin-reflect:1.6.21")
 
         testImplementation("org.springframework.boot:spring-boot-starter-test") {
             exclude(group = "junit", module = "junit")
             exclude(module = "mockito-core")
         }
-        testImplementation("io.mockk:mockk:1.12.0")
-        testImplementation("com.ninja-squad:springmockk:3.0.1")
+        testImplementation("io.mockk:mockk:1.12.7")
+        testImplementation("com.ninja-squad:springmockk:3.1.1")
         testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.0")
         testImplementation("org.junit.jupiter:junit-jupiter-params:5.9.0")
         testImplementation("org.junit.jupiter:junit-jupiter-engine:5.9.0")
