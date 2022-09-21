@@ -25,10 +25,8 @@ class BlogController(
     }
 
     @GetMapping("/v1/top-searched/blog")
-    fun getSearchedTop(
-        @RequestParam(required = false, defaultValue = "10") @Min(PAGING_MIN) @Max(SEARCHED_TOP_PAGING_MAX) size: Int,
-    ): List<SearchBlogHistoryResponseDto> {
-        return searchBlogApplicationService.getSearchedTopHistory(size).toDto()
+    fun getSearchedTop(): List<SearchBlogHistoryResponseDto> {
+        return searchBlogApplicationService.getSearchedTopHistory().toDto()
     }
 
     companion object {

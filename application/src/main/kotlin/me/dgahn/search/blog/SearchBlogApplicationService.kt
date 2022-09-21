@@ -2,6 +2,7 @@ package me.dgahn.search.blog
 
 import me.dgahn.client.BlogClient
 import me.dgahn.search.blog.port.SearchBlogHistoryDomainRepository
+import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 
@@ -18,7 +19,12 @@ class SearchBlogApplicationService(
     }
 
     @Transactional(readOnly = true)
-    fun getSearchedTopHistory(size: Int): List<SearchBlogHistoryDomain> {
-        return searchHistoryDomainRepository.findAllByOrderBySearchCount(size)
+    @Cacheable(cacheNames = ["searchedTop"])
+    fun getSearchedTopHistory(): List<SearchBlogHistoryDomain> {
+        return searchHistoryDomainRepository.findAllByOrderBySearchCount(SEARCHED_TOP_SIZE)
+    }
+
+    companion object {
+        private const val SEARCHED_TOP_SIZE = 10
     }
 }
