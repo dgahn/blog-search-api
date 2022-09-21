@@ -17,8 +17,8 @@ class BlogController(
     fun searchBlog(
         @RequestParam query: String,
         @RequestParam(required = false, defaultValue = "ACCURACY") sort: SearchBlogSortEnum,
-        @RequestParam(required = false, defaultValue = "1") @Min(PAGING_MIN) @Max(SEARCH_BLOG_PAGING_MAX) page: Int,
-        @RequestParam(required = false, defaultValue = "10") @Min(PAGING_MIN) @Max(SEARCH_BLOG_PAGING_MAX) size: Int,
+        @RequestParam(required = false, defaultValue = "1") @Min(PAGING_MIN) @Max(PAGING_MAX) page: Int,
+        @RequestParam(required = false, defaultValue = "10") @Min(PAGING_MIN) @Max(PAGING_MAX) size: Int,
     ): List<BlogResponseDto> {
         return searchBlogApplicationService.searchBlog(SearchBlogCondition(query, sort.toInternal(), page, size))
             .toDto()
@@ -31,7 +31,6 @@ class BlogController(
 
     companion object {
         private const val PAGING_MIN = 1L
-        private const val SEARCH_BLOG_PAGING_MAX = 50L
-        private const val SEARCHED_TOP_PAGING_MAX = 50L
+        private const val PAGING_MAX = 50L
     }
 }
