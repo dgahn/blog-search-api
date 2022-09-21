@@ -19,3 +19,12 @@ fun BlogDomain.toDto(): BlogResponseDto = BlogResponseDto(
 )
 
 fun List<BlogDomain>.toDto(): List<BlogResponseDto> = this.map { it.toDto() }
+
+enum class SearchBlogSortEnum {
+    ACCURACY, RECENCY;
+
+    fun toInternal(): SearchBlogSort = when (this) {
+        ACCURACY -> SearchBlogSort.ACCURACY
+        RECENCY -> SearchBlogSort.RECENCY
+    }
+}

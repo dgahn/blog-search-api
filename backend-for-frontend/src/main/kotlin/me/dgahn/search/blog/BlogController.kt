@@ -17,11 +17,12 @@ class BlogController(
     @GetMapping("/v1/search/blog")
     fun searchBlog(
         @RequestParam query: String,
-        @RequestParam(required = false, defaultValue = "accuracy") sort: String,
+        @RequestParam(required = false, defaultValue = "ACCURACY") sort: SearchBlogSortEnum,
         @RequestParam(required = false, defaultValue = "1") @Min(PAGING_MIN) @Max(SEARCH_BLOG_PAGING_MAX) page: Int,
         @RequestParam(required = false, defaultValue = "10") @Min(PAGING_MIN) @Max(SEARCH_BLOG_PAGING_MAX) size: Int,
     ): List<BlogResponseDto> {
-        return searchBlogApplicationService.searchBlog(SearchBlogCondition(query, sort, page, size)).toDto()
+        return searchBlogApplicationService.searchBlog(SearchBlogCondition(query, sort.toInternal(), page, size))
+            .toDto()
     }
 
     @GetMapping("/v1/top-searched/blog")

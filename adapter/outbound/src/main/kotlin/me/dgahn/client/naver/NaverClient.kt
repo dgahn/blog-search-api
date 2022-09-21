@@ -1,10 +1,9 @@
-package me.dgahn.client.kakao
+package me.dgahn.client.naver
 
 import me.dgahn.client.BaseBlogResponseListDto
 import me.dgahn.client.BlogClient
 import me.dgahn.client.OutBoundSearchBlogCondition
-import me.dgahn.client.kakao.KakaoBlogResponseListDto.Companion.orEmpty
-import org.springframework.context.annotation.Primary
+import me.dgahn.client.naver.NaverBlogResponseListDto.Companion.orEmpty
 import org.springframework.http.HttpEntity
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpMethod
@@ -13,15 +12,15 @@ import org.springframework.stereotype.Component
 import org.springframework.web.client.RestTemplate
 import org.springframework.web.util.UriComponentsBuilder
 
-@Primary
 @Component
-class KaKaoClient(
+class NaverClient(
     private val restTemplate: RestTemplate,
-    private val kakaoProperties: KakaoProperties
+    private val naverProperties: NaverProperties
 ) : BlogClient {
     private val headers = HttpHeaders().apply {
         add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-        set(HttpHeaders.AUTHORIZATION, "${kakaoProperties.keyPrefix} ${kakaoProperties.apiKey}")
+        add(naverProperties.clientIdKey, naverProperties.clientIdValue)
+        add(naverProperties.clientSecretKey, naverProperties.clientSecretValue)
     }
 
     // ToDo 예외 처리 추가 필요.
@@ -29,14 +28,14 @@ class KaKaoClient(
         val url = createURL(outBoundSearchBlogCondition)
         val entity: HttpEntity<String> = HttpEntity(headers)
 
-        return restTemplate.exchange(url, HttpMethod.GET, entity, KakaoBlogResponseListDto::class.java).body.orEmpty()
+        return restTemplate.exchange(url, HttpMethod.GET, entity, NaverBlogResponseListDto::class.java).body.orEmpty()
     }
 
     private fun createURL(outBoundSearchBlogCondition: OutBoundSearchBlogCondition): String =
-        UriComponentsBuilder.fromHttpUrl(kakaoProperties.url)
+        UriComponentsBuilder.fromHttpUrl(naverProperties.url)
             .queryParam(outBoundSearchBlogCondition::query.name, outBoundSearchBlogCondition.query)
-            .queryParam(outBoundSearchBlogCondition::page.name, outBoundSearchBlogCondition.page)
-            .queryParam(outBoundSearchBlogCondition::size.name, outBoundSearchBlogCondition.size)
-            .queryParam(outBoundSearchBlogCondition::sort.name, outBoundSearchBlogCondition.sort.kakao)
+            .queryParam(outBoundSearchBlogCondition::start.name, outBoundSearchBlogCondition.start)
+            .queryParam(outBoundSearchBlogCondition::display.name, outBoundSearchBlogCondition.display)
+            .queryParam(outBoundSearchBlogCondition::sort.name, outBoundSearchBlogCondition.sort.naver)
             .toUriString()
 }
